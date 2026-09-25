@@ -308,7 +308,7 @@ def _checkout_git(source: str, destination: Path, requested_ref: str | None) -> 
         if revision is None:
             # A tag/commit not included by a no-tags clone is fetched explicitly.
             _run_git(["-C", str(destination), "fetch", "--no-tags", "origin", requested_ref], timeout=300)
-            revision = _git_revision(destination, requested_ref)
+            revision = _git_revision(destination, requested_ref) or _git_revision(destination, "FETCH_HEAD")
         if revision is None:
             raise BootstrapError("requested standard ref is not a commit")
     else:

@@ -60,6 +60,14 @@ def test_resolve_git_standard_pins_commit(tmp_path: Path) -> None:
         assert resolved.requested_ref == commit
 
 
+def test_resolve_git_standard_pins_tag(tmp_path: Path) -> None:
+    standard = make_standard(tmp_path / "standard")
+    make_git_repo(standard)
+    subprocess.run(["git", "-C", str(standard), "tag", "v1"], check=True)
+    with resolve_standard(standard, requested_ref="v1") as resolved:
+        assert resolved.commit == subprocess.check_output(["git", "-C", str(standard), "rev-parse", "v1"], text=True).strip()
+
+
 def test_git_url_fragment_selects_commit(tmp_path: Path) -> None:
     standard = make_standard(tmp_path / "standard")
     make_git_repo(standard)
