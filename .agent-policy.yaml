@@ -1,0 +1,62 @@
+version: 1
+standard:
+  name: agent-engineering-standard
+  version: 1.0.0
+project:
+  name: agent-engineering-standard
+  modules:
+  - id: src.agent_policy
+    paths:
+    - src/agent_policy
+    tests:
+    - tests
+    critical: false
+  languages:
+  - python
+  frameworks: []
+  package_managers:
+  - pip
+  lockfiles: []
+  agent_rules:
+  - AGENTS.md
+  ci_files:
+  - .github/workflows/agent-policy.yml
+  - .github/workflows/ci.yml
+  migration_paths: []
+  external_integrations: []
+commands:
+  test:
+    argv:
+    - python
+    - -m
+    - pytest
+    cwd: .
+    timeout_seconds: 900
+quality:
+  line_coverage_min: 95
+  branch_coverage_min: 90
+  mutation_score_min: 90
+architecture:
+  forbidden_imports: []
+  max_cyclomatic_complexity: 10
+security:
+  required_checks:
+  - invalid_input
+  - authorization
+  - replay
+  - dependency_failure
+  - secret_scan
+  unknown_external_result: blocked
+release:
+  dangerous_actions: blocked
+  reversible_deploy_only: true
+  auto_merge: false
+  auto_deploy: false
+evidence:
+  require_commit_match: true
+  include_source_hashes: true
+baseline:
+  created_at: '2026-09-25T17:09:27.174444+00:00'
+  ratchet: true
+  known_failures: []
+  source_commit: null
