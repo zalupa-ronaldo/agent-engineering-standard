@@ -35,9 +35,9 @@ workflow:
     - handoff
 checks:
   default:
-    - command: git diff --check
+    - argv: [git, diff, --check]
       purpose: Detect whitespace errors.
-    - command: git status --short
+    - argv: [git, status, --short]
       purpose: Record the final working tree.
   project_defined: true
 artifacts:

@@ -143,6 +143,29 @@ def _copy_standard_adapters(root: Path, standard_root: Path, *, skill_relative: 
     return operations
 
 
+def _attach_standard_pin(root: Path, standard: Any, *, dry_run: bool) -> None:
+    """Embed the immutable standard identity in generated policy documents."""
+
+    if dry_run:
+        return
+    pin = standard.metadata()
+    for path in (root / ".agent-policy.yaml", root / ".agent-policy.draft.yaml"):
+        if not path.is_file():
+            continue
+        document = load_policy(root, path)
+        existing = document.data.get("standard")
+        if existing is not None and isinstance(existing, dict):
+            existing_commit = existing.get("standard_commit")
+            if existing_commit and existing_commit != pin.get("standard_commit"):
+                raise BootstrapError("active policy is pinned to a different standard")
+            updated = dict(existing)
+            updated.update({key: value for key, value in pin.items() if key in {"id", "version", "standard_commit", "standard_hash"}})
+            document.data["standard"] = updated
+        else:
+            document.data["standard"] = {key: pin[key] for key in ("id", "version", "standard_commit", "standard_hash")}
+        atomic_write(path, dump_yaml(document.data), overwrite=True)
+
+
 def cmd_doctor(args: argparse.Namespace) -> int:
     scan, root = _scan(args.path)
     value = scan.as_dict()
@@ -366,6 +389,7 @@ def cmd_bootstrap(args: argparse.Namespace) -> int:
                 force=bool(args.force),
                 template=getattr(args, "template", "generic"),
             )
+            _attach_standard_pin(root, standard, dry_run=bool(args.dry_run))
             adapter_operations = _copy_standard_adapters(
                 root,
                 standard.root,
