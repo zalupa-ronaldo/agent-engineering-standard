@@ -421,11 +421,13 @@ def _git_project_state(root: Path) -> dict[str, Any]:
         path = line[3:].strip() if len(line) >= 3 else ""
         if path:
             changed_paths.append(path)
+    head = _git_command(root, "rev-parse", "HEAD")
+    base = _git_command(root, "rev-parse", "HEAD~1") or head
     return {
         "is_repository": True,
         "branch": _git_command(root, "branch", "--show-current"),
-        "head": _git_command(root, "rev-parse", "HEAD"),
-        "base": _git_command(root, "rev-parse", "HEAD~1"),
+        "head": head,
+        "base": base,
         "dirty": bool(status),
         "changed_paths": changed_paths,
         "remote": _sanitise_source(_git_command(root, "config", "--get", "remote.origin.url") or "") or None,
