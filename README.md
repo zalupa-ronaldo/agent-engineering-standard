@@ -11,7 +11,7 @@ Give an agent a message like:
 
 ```text
 Use the Agent Engineering Standard from:
-https://github.com/example/agent-engineering-standard
+https://github.com/zalupa-ronaldo/agent-engineering-standard
 
 Bootstrap the current repository, then implement:
 <task>
@@ -106,3 +106,28 @@ python3 -m agent_policy scan .
 See [`docs/getting-started/one-link.md`](docs/getting-started/one-link.md) for
 the full agent sequence and [`CONTRIBUTING.md`](CONTRIBUTING.md) for changes to
 the policy engine.
+
+## Install as a Codex plugin or standalone skill
+
+The repository is a skills-only plugin with portable and Codex manifests.
+Add its marketplace and install the plugin:
+
+```bash
+codex plugin marketplace add zalupa-ronaldo/agent-engineering-standard
+codex plugin add agent-engineering-standard@agent-engineering
+```
+
+Open a new chat and ask: “Use $agent-engineering to bootstrap this project,
+then complete my task.” The agent handles project adoption. Installing the
+plugin makes the workflow available; project checks become active during adoption.
+
+For a standalone skill, ask your agent:
+
+```text
+Install the skill from https://github.com/zalupa-ronaldo/agent-engineering-standard
+at skills/agent-engineering, then apply it to this project.
+```
+
+The same skill folder can be copied into `.cline/skills/agent-engineering/`
+for Cline. Keep its references, assets, and SKILL.md together.
+Plugin packaging follows [OpenAI plugin documentation](https://developers.openai.com/plugins/build/plugins).

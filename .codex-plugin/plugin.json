@@ -1,0 +1,14 @@
+{
+  "name": "agent-engineering-standard",
+  "version": "1.0.0",
+  "description": "Bootstrap repositories with tested, maintainable code, project policy, and durable handoffs.",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Agent Engineering Standard",
+    "shortDescription": "Tested code, project policy, and agent handoffs",
+    "category": "Productivity",
+    "defaultPrompt": [
+      "Apply the Agent Engineering Standard to this project, then complete my task."
+    ]
+  }
+}

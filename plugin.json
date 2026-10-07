@@ -1,0 +1,6 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "agent-engineering-standard",
+  "version": "1.0.0",
+  "description": "Bootstrap repositories with tested, maintainable code, project policy, and durable handoffs."
+}

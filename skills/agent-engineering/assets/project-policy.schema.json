@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-engineering-standard.dev/schemas/project-policy.schema.json",
+  "title": "Agent Engineering Standard project policy",
+  "type": "object",
+  "required": ["version", "project", "commands", "quality"],
+  "properties": {
+    "version": { "const": 1 },
+    "standard": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "version": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "project": {
+      "type": "object",
+      "required": ["name", "modules"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "modules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "paths"],
+            "properties": {
+              "id": { "type": "string", "minLength": 1 },
+              "paths": { "type": "array", "items": { "type": "string" } },
+              "tests": { "type": "array", "items": { "type": "string" } },
+              "critical": { "type": "boolean" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "languages": { "type": "array", "items": { "type": "string" } },
+        "frameworks": { "type": "array", "items": { "type": "string" } },
+        "package_managers": { "type": "array", "items": { "type": "string" } },
+        "lockfiles": { "type": "array", "items": { "type": "string" } },
+        "agent_rules": { "type": "array", "items": { "type": "string" } },
+        "ci_files": { "type": "array", "items": { "type": "string" } },
+        "migration_paths": { "type": "array", "items": { "type": "string" } },
+        "external_integrations": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": true
+    },
+    "commands": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["argv"],
+        "properties": {
+          "argv": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string", "minLength": 1 }
+          },
+          "cwd": { "type": "string" },
+          "timeout_seconds": { "type": "integer", "minimum": 1, "maximum": 86400 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "quality": {
+      "type": "object",
+      "required": ["line_coverage_min", "branch_coverage_min", "mutation_score_min"],
+      "properties": {
+        "line_coverage_min": { "type": "number", "minimum": 95, "maximum": 100 },
+        "branch_coverage_min": { "type": "number", "minimum": 90, "maximum": 100 },
+        "mutation_score_min": { "type": "number", "minimum": 90, "maximum": 100 }
+      },
+      "additionalProperties": true
+    },
+    "architecture": { "type": "object" },
+    "security": { "type": "object" },
+    "release": { "type": "object" },
+    "evidence": { "type": "object" },
+    "baseline": { "type": "object" }
+  },
+  "additionalProperties": true
+}

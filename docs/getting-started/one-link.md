@@ -4,7 +4,7 @@ The user only needs a repository URL and a task. The agent owns the setup.
 
 ```text
 Use this standard for the project:
-https://github.com/example/agent-engineering-standard
+https://github.com/zalupa-ronaldo/agent-engineering-standard
 
 First bootstrap the current repository with the standard, then complete:
 <task>
@@ -17,7 +17,7 @@ while a task is in progress.
 The reference implementation exposes that flow as one command:
 
 ```bash
-agent-policy bootstrap https://github.com/example/agent-engineering-standard.git .
+agent-policy bootstrap https://github.com/zalupa-ronaldo/agent-engineering-standard.git .
 ```
 
 Use `--ref <tag-or-commit>` to select a Git ref or `#<tag-or-commit>` in the

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agent Engineering Standard"
+  short_description: "Tested code, project policy, and durable handoffs"
+  default_prompt: "Use $agent-engineering to adopt this standard and complete my repository task."
